@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo Pro+</title>
+
+  <meta name="theme-color" content="#0f766e">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <h1>📋 ToDo Pro+</h1>
+</header>
+
+<main class="container">
+
+  <!-- Login -->
+  <section id="loginPage" class="card">
+    <h2>Welcome</h2>
+    <p>Please sign in to continue.</p>
+
+    <button id="loginBtn">
+      Login with Google
+    </button>
+  </section>
+
+  <!-- App -->
+  <section id="appPage" style="display:none;">
+
+    <div class="card">
+      <h2 id="userName">
+        Welcome
+      </h2>
+
+      <button id="logoutBtn">
+        Logout
+      </button>
+    </div>
+
+    <div class="card">
+
+      <input
+      id="taskInput"
+      type="text"
+      placeholder="Enter your task">
+
+      <button id="addTaskBtn">
+        Add Task
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Your Tasks</h2>
+
+      <ul id="taskList">
+
+      </ul>
+
+    </div>
+
+  </section>
+
+</main>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js");
+  });
+}
+</script>
+
+</body>
+</html>
