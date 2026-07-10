@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online To-Do App</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f766e">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Yahan tumhara pura HTML UI rahega -->
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="app.js"></script>
+
+  <script>
+  if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+          navigator.serviceWorker.register("./sw.js");
+      });
+  }
+  </script>
+
+</body>
+</html>
