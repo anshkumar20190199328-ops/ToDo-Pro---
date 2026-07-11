@@ -374,3 +374,55 @@ document.getElementById("forgotPinBtn").onclick = async () => {
   }
 
 };
+
+// Verify Email Code
+document.getElementById("verifyCodeBtn").onclick = () => {
+
+  const code = document.getElementById("verificationInput").value.trim();
+
+  if (code === verificationCode) {
+
+    alert("✅ Code Verified");
+
+    document.getElementById("newPinInput").style.display = "block";
+    document.getElementById("saveNewPinBtn").style.display = "block";
+
+  } else {
+
+    alert("❌ Invalid Verification Code");
+
+  }
+
+};
+
+// Save New PIN
+document.getElementById("saveNewPinBtn").onclick = async () => {
+
+  const newPin = document.getElementById("newPinInput").value.trim();
+
+  if (newPin.length !== 4) {
+    alert("Please enter a 4-digit PIN.");
+    return;
+  }
+
+  try {
+
+    await set(
+      ref(db, "users/" + currentUser.uid + "/vault/pin"),
+      newPin
+    );
+
+    alert("🎉 PIN Reset Successfully!");
+
+    document.getElementById("verifyPinBox").style.display = "none";
+    document.getElementById("newPinInput").value = "";
+    document.getElementById("verificationInput").value = "";
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Failed to reset PIN.");
+
+  }
+
+};
