@@ -177,21 +177,31 @@ const homePage = document.getElementById("homePage");
 const tasksPage = document.getElementById("tasksPage");
 
 document.getElementById("homeTab").onclick = () => {
+
   homePage.style.display = "block";
   tasksPage.style.display = "none";
+  vaultPage.style.display = "none";
+  
 };
-
 document.getElementById("tasksTab").onclick = () => {
+
   homePage.style.display = "none";
   tasksPage.style.display = "block";
-};
+  vaultPage.style.display = "none";
 
+};
 document.getElementById("songsTab").onclick = () => {
   alert("🎵 Songs feature coming soon!");
 };
 
+const vaultPage = document.getElementById("vaultPage");
+
 document.getElementById("vaultTab").onclick = () => {
-  alert("🔒 Private Vault coming soon!");
+
+  homePage.style.display = "none";
+  tasksPage.style.display = "none";
+  vaultPage.style.display = "block";
+
 };
 
 document.getElementById("settingsTab").onclick = () => {
