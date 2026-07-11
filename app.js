@@ -247,7 +247,7 @@ document.getElementById("settingsTab").onclick = () => {
 // Private Vault PIN
 // =========================
 
-unlockBtn.onclick = () => {
+unlockBtn.onclick = async () => {
 
   const pin = pinInput.value.trim();
 
@@ -256,33 +256,45 @@ unlockBtn.onclick = () => {
     return;
   }
 
-  const key = "vaultPin_" + currentUser.uid;
-  const savedPin = localStorage.getItem(key);
+  const pinRef = ref(db, "users/" + currentUser.uid + "/vault/pin");
 
-  // First time: save PIN
-  if (!savedPin) {
+  try {
 
-    localStorage.setItem(key, pin);
+    const snapshot = await get(pinRef);
 
-    alert("✅ PIN saved successfully!");
+    // First time - Save PIN
+    if (!snapshot.exists()) {
 
-    pinInput.style.display = "none";
-    unlockBtn.style.display = "none";
-    vaultContent.style.display = "block";
+      await set(pinRef, pin);
 
-    return;
-  }
+      alert("✅ PIN saved successfully!");
 
-  // Verify PIN
-  if (savedPin === pin) {
+      pinInput.style.display = "none";
+      unlockBtn.style.display = "none";
+      vaultContent.style.display = "block";
 
-    pinInput.style.display = "none";
-    unlockBtn.style.display = "none";
-    vaultContent.style.display = "block";
+      return;
+    }
 
-  } else {
+    // Verify PIN
+    const savedPin = snapshot.val();
 
-    alert("❌ Wrong PIN");
+    if (savedPin === pin) {
+
+      pinInput.style.display = "none";
+      unlockBtn.style.display = "none";
+      vaultContent.style.display = "block";
+
+    } else {
+
+      alert("❌ Wrong PIN");
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Error connecting to Firebase.");
 
   }
 
