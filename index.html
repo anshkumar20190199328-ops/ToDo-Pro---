@@ -76,22 +76,32 @@
 
     </div>
 
-  </section>
+</section>
 
 </main>
+
+<!-- Bottom Navigation Start -->
+<nav class="bottom-nav">
+
+  <button id="homeTab">🏠<br>Home</button>
+
+  <button id="tasksTab">📝<br>Tasks</button>
+
+  <button id="songsTab">🎵<br>Songs</button>
+
+  <button id="vaultTab">🔒<br>Vault</button>
+
+  <button id="settingsTab">⚙️<br>Settings</button>
+
+</nav>
+<!-- Bottom Navigation End -->
 
 <script type="module" src="firebase.js"></script>
 <script type="module" src="app.js"></script>
 
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .then(() => console.log("Service Worker Registered"))
-      .catch(err => console.log(err));
-  });
-}
+...
 </script>
-  
+
 </body>
 </html>
