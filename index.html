@@ -95,6 +95,77 @@
 
 </main>
 
+  <!-- =========================
+     Private Vault
+========================= -->
+
+<section id="vaultPage" style="display:none;">
+
+  <div class="card">
+
+    <h2>🔒 Private Vault</h2>
+
+    <p>Enter your 4-digit PIN</p>
+
+    <input
+      type="password"
+      id="vaultPin"
+      maxlength="4"
+      placeholder="Enter PIN">
+
+    <button id="unlockVaultBtn">
+      🔓 Unlock
+    </button>
+
+  </div>
+
+  <!-- Vault Content -->
+<div id="vaultContent" style="display:none;">
+
+  <div class="card">
+
+    <h2>🔒 My Private Vault</h2>
+
+    <button id="privateNotesBtn">📝 Private Notes</button>
+
+    <button id="privateSongsBtn">🎵 Private Songs</button>
+
+    <button id="privatePhotosBtn">🖼️ Private Photos</button>
+
+    <button id="privateFilesBtn">📁 Private Files</button>
+
+  </div>
+
+</div>
+
+  <!-- =========================
+     Private Notes
+========================= -->
+
+<div id="privateNotesPage" style="display:none;">
+
+  <div class="card">
+
+    <h2>📝 Private Notes</h2>
+
+    <textarea
+      id="privateNoteInput"
+      placeholder="Write your private note here..."
+      rows="6"
+      style="width:100%;padding:12px;border-radius:8px;"></textarea>
+
+    <br><br>
+
+    <button id="savePrivateNoteBtn">
+      💾 Save Note
+    </button>
+
+  </div>
+
+</div>
+  
+</section>
+
 <!-- Bottom Navigation -->
 <nav class="bottom-nav">
 
