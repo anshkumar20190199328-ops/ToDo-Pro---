@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
   <title>ToDo Pro+</title>
 
   <meta name="theme-color" content="#0f766e">
+
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -20,67 +23,79 @@
 
 <main class="container">
 
-  <!-- Login -->
+  <!-- Login Page -->
   <section id="loginPage" class="card">
+
     <h2>Welcome</h2>
+
     <p>Please sign in to continue.</p>
 
     <button id="loginBtn">
       Login with Google
     </button>
+
   </section>
 
-  <!-- App -->
+  <!-- App Page -->
   <section id="appPage" style="display:none;">
+        <!-- Home Page -->
+    <div id="homePage">
 
-    <div class="card">
-      <h2 id="userName">
-        Welcome
-      </h2>
+      <div class="card">
+        <h2>🏠 Home</h2>
+        <p>Welcome to ToDo Pro+</p>
+      </div>
 
-      <button id="logoutBtn">
-        Logout
-      </button>
-    </div>
-
-    <div class="card">
-
-      <input
-      id="taskInput"
-      type="text"
-      placeholder="Enter your task">
-
-      <button id="addTaskBtn">
-        Add Task
-      </button>
+      <div class="card">
+        <h3 id="userName">Welcome</h3>
+        <button id="logoutBtn">Logout</button>
+      </div>
 
     </div>
 
-    <div class="card">
-  <h3>Dashboard</h3>
+    <!-- Tasks Page -->
+    <div id="tasksPage">
 
-  <p>Total Tasks: <span id="totalTask">0</span></p>
+      <div class="card">
 
-  <p>Pending: <span id="pendingTask">0</span></p>
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="Enter your task">
 
-  <p>Completed: <span id="doneTask">0</span></p>
-</div>
-    
-    <div class="card">
+        <button id="addTaskBtn">
+          Add Task
+        </button>
 
-      <h2>Your Tasks</h2>
+      </div>
 
-      <ul id="taskList">
+      <div class="card">
 
-      </ul>
+        <h3>📊 Dashboard</h3>
+
+        <p>📋 Total Tasks: <span id="totalTask">0</span></p>
+
+        <p>⏳ Pending Tasks: <span id="pendingTask">0</span></p>
+
+        <p>✅ Completed Tasks: <span id="doneTask">0</span></p>
+
+      </div>
+
+      <div class="card">
+
+        <h2>Your Tasks</h2>
+
+        <ul id="taskList"></ul>
+
+      </div>
 
     </div>
 
-</section>
+  </section>
 
 </main>
 
-<!-- Bottom Navigation Start -->
+<!-- Bottom Navigation -->
 <nav class="bottom-nav">
 
   <button id="homeTab">🏠<br>Home</button>
@@ -94,13 +109,17 @@
   <button id="settingsTab">⚙️<br>Settings</button>
 
 </nav>
-<!-- Bottom Navigation End -->
-
 <script type="module" src="firebase.js"></script>
 <script type="module" src="app.js"></script>
 
 <script>
-...
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch(err => console.log(err));
+  });
+}
 </script>
 
 </body>
