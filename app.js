@@ -22,6 +22,9 @@ import {
   child
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 
+// Email Verification
+let verificationCode = "";
+
 // =========================
 // Global Variables
 // =========================
