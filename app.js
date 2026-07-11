@@ -346,3 +346,30 @@ window.addEventListener("load", () => {
   }
 
 });
+
+document.getElementById("forgotPinBtn").onclick = async () => {
+
+  verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  try {
+
+    await emailjs.send(
+      "service_ansh4309",
+      "template_21kqq98",
+      {
+        to_name: currentUser.displayName,
+        to_email: currentUser.email,
+        verification_code: verificationCode
+      }
+    );
+
+    alert("Verification code sent to: " + currentUser.email);
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Failed to send verification email.");
+
+  }
+
+};
