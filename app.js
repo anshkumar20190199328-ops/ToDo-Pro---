@@ -207,3 +207,55 @@ document.getElementById("vaultTab").onclick = () => {
 document.getElementById("settingsTab").onclick = () => {
   alert("⚙️ Settings coming soon!");
 };
+
+// =========================
+// Private Vault PIN
+// =========================
+
+import {
+  get,
+  child
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+const pinInput = document.getElementById("vaultPin");
+const unlockBtn = document.getElementById("unlockVaultBtn");
+const vaultContent = document.getElementById("vaultContent");
+
+unlockBtn.onclick = async () => {
+
+  const pin = pinInput.value.trim();
+
+  if (pin.length !== 4) {
+    alert("Please enter a 4-digit PIN");
+    return;
+  }
+
+  const snap = await get(
+    child(
+      ref(db),
+      "users/" + currentUser.uid + "/vault/pin"
+    )
+  );
+
+  if (!snap.exists()) {
+
+    alert("No PIN found. Next step me Save PIN feature add karenge.");
+
+    return;
+
+  }
+
+  if (snap.val() === pin) {
+
+    pinInput.style.display = "none";
+    unlockBtn.style.display = "none";
+
+    vaultContent.style.display = "block";
+
+  } else {
+
+    alert("Wrong PIN");
+
+  }
+
+};
