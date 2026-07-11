@@ -1,3 +1,7 @@
+// =========================
+// Firebase Imports
+// =========================
+
 import {
   auth,
   db,
@@ -13,12 +17,37 @@ import {
   set,
   onValue,
   remove,
-  update
+  update,
+  get,
+  child
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+// =========================
+// Global Variables
+// =========================
 
 let currentUser = null;
 
+const loginPage = document.getElementById("loginPage");
+const appPage = document.getElementById("appPage");
+
+const homePage = document.getElementById("homePage");
+const tasksPage = document.getElementById("tasksPage");
+const vaultPage = document.getElementById("vaultPage");
+
+const userName = document.getElementById("userName");
+
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+
+const pinInput = document.getElementById("vaultPin");
+const unlockBtn = document.getElementById("unlockVaultBtn");
+const vaultContent = document.getElementById("vaultContent");
+
+// =========================
 // Login
+// =========================
+
 document.getElementById("loginBtn").onclick = async () => {
   try {
     await signInWithPopup(auth, provider);
@@ -27,24 +56,32 @@ document.getElementById("loginBtn").onclick = async () => {
   }
 };
 
+// =========================
 // Logout
+// =========================
+
 document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
 };
 
-// User Login Check
+// =========================
+// Auth State
+// =========================
+
 onAuthStateChanged(auth, (user) => {
 
   if (user) {
 
     currentUser = user;
 
-    document.getElementById("loginPage").style.display = "none";
+    loginPage.style.display = "none";
+    appPage.style.display = "block";
 
-    document.getElementById("appPage").style.display = "block";
+    homePage.style.display = "block";
+    tasksPage.style.display = "none";
+    vaultPage.style.display = "none";
 
-    document.getElementById("userName").innerHTML =
-      "Welcome, " + user.displayName;
+    userName.textContent = "Welcome, " + user.displayName;
 
     loadTasks();
 
@@ -52,30 +89,28 @@ onAuthStateChanged(auth, (user) => {
 
     currentUser = null;
 
-    document.getElementById("loginPage").style.display = "block";
-
-    document.getElementById("appPage").style.display = "none";
+    loginPage.style.display = "block";
+    appPage.style.display = "none";
+    vaultPage.style.display = "none";
 
   }
 
 });
 
-// Firebase Path
+// =========================
+// Firebase Task Path
+// =========================
+
 function taskRef() {
-
   return ref(db, "users/" + currentUser.uid + "/tasks");
-
 }
 // =========================
-// Part 2 - Tasks
+// Add Task
 // =========================
 
-// Add Task
 document.getElementById("addTaskBtn").onclick = () => {
 
-  const input = document.getElementById("taskInput");
-
-  const text = input.value.trim();
+  const text = taskInput.value.trim();
 
   if (!text) {
     alert("Please enter a task.");
@@ -88,20 +123,21 @@ document.getElementById("addTaskBtn").onclick = () => {
     created: Date.now()
   });
 
-  input.value = "";
+  taskInput.value = "";
 
 };
 
+// =========================
 // Load Tasks
+// =========================
+
 function loadTasks() {
 
   onValue(taskRef(), (snapshot) => {
 
     const data = snapshot.val() || {};
 
-    const list = document.getElementById("taskList");
-
-    list.innerHTML = "";
+    taskList.innerHTML = "";
 
     let total = 0;
     let completed = 0;
@@ -115,16 +151,17 @@ function loadTasks() {
       const li = document.createElement("li");
 
       li.innerHTML = `
-        <span style="${task.done ? 'text-decoration:line-through;color:gray;' : ''}">
+        <span style="${task.done ? "text-decoration:line-through;color:gray;" : ""}">
           ${task.text}
         </span>
+
         <div style="margin-top:8px;">
           <button onclick="toggleTask('${id}', ${task.done})">✔</button>
           <button onclick="deleteTask('${id}')">🗑</button>
         </div>
       `;
 
-      list.appendChild(li);
+      taskList.appendChild(li);
 
     });
 
@@ -133,11 +170,11 @@ function loadTasks() {
   });
 
 }
+
 // =========================
-// Part 3 - Final
+// Complete Task
 // =========================
 
-// Complete Task
 window.toggleTask = function(id, done) {
 
   update(ref(db, "users/" + currentUser.uid + "/tasks/" + id), {
@@ -146,7 +183,10 @@ window.toggleTask = function(id, done) {
 
 };
 
+// =========================
 // Delete Task
+// =========================
+
 window.deleteTask = function(id) {
 
   if (confirm("Delete this task?")) {
@@ -157,71 +197,57 @@ window.deleteTask = function(id) {
 
 };
 
-// Dashboard Update
+// =========================
+// Dashboard
+// =========================
+
 function updateDashboard(total, completed) {
 
-  const totalEl = document.getElementById("totalTask");
-  const pendingEl = document.getElementById("pendingTask");
-  const doneEl = document.getElementById("doneTask");
-
-  if (totalEl) totalEl.textContent = total;
-  if (pendingEl) pendingEl.textContent = total - completed;
-  if (doneEl) doneEl.textContent = completed;
+  document.getElementById("totalTask").textContent = total;
+  document.getElementById("pendingTask").textContent = total - completed;
+  document.getElementById("doneTask").textContent = completed;
 
 }
 // =========================
 // Bottom Navigation
 // =========================
 
-const homePage = document.getElementById("homePage");
-const tasksPage = document.getElementById("tasksPage");
-
 document.getElementById("homeTab").onclick = () => {
-
   homePage.style.display = "block";
   tasksPage.style.display = "none";
   vaultPage.style.display = "none";
-  
 };
-document.getElementById("tasksTab").onclick = () => {
 
+document.getElementById("tasksTab").onclick = () => {
   homePage.style.display = "none";
   tasksPage.style.display = "block";
   vaultPage.style.display = "none";
-
 };
-document.getElementById("songsTab").onclick = () => {
-  alert("🎵 Songs feature coming soon!");
-};
-
-const vaultPage = document.getElementById("vaultPage");
 
 document.getElementById("vaultTab").onclick = () => {
-
   homePage.style.display = "none";
   tasksPage.style.display = "none";
   vaultPage.style.display = "block";
 
+  pinInput.value = "";
+  pinInput.style.display = "block";
+  unlockBtn.style.display = "block";
+  vaultContent.style.display = "none";
+};
+
+document.getElementById("songsTab").onclick = () => {
+  alert("🎵 Songs feature coming soon!");
 };
 
 document.getElementById("settingsTab").onclick = () => {
-  alert("⚙️ Settings coming soon!");
+  alert("⚙️ Settings feature coming soon!");
 };
 
 // =========================
 // Private Vault PIN
 // =========================
 
-import {
-  get,
-  child
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
-
-const pinInput = document.getElementById("vaultPin");
-const unlockBtn = document.getElementById("unlockVaultBtn");
-const vaultContent = document.getElementById("vaultContent");
-
-unlockBtn.onclick = async () => {
+unlockBtn.onclick = () => {
 
   const pin = pinInput.value.trim();
 
@@ -230,32 +256,78 @@ unlockBtn.onclick = async () => {
     return;
   }
 
-  const snap = await get(
-    child(
-      ref(db),
-      "users/" + currentUser.uid + "/vault/pin"
-    )
-  );
+  const key = "vaultPin_" + currentUser.uid;
+  const savedPin = localStorage.getItem(key);
 
-  if (!snap.exists()) {
+  // First time: save PIN
+  if (!savedPin) {
 
-    alert("No PIN found. Next step me Save PIN feature add karenge.");
+    localStorage.setItem(key, pin);
 
-    return;
-
-  }
-
-  if (snap.val() === pin) {
+    alert("✅ PIN saved successfully!");
 
     pinInput.style.display = "none";
     unlockBtn.style.display = "none";
+    vaultContent.style.display = "block";
 
+    return;
+  }
+
+  // Verify PIN
+  if (savedPin === pin) {
+
+    pinInput.style.display = "none";
+    unlockBtn.style.display = "none";
     vaultContent.style.display = "block";
 
   } else {
 
-    alert("Wrong PIN");
+    alert("❌ Wrong PIN");
 
   }
 
 };
+
+// =========================
+// Private Notes (Basic)
+// =========================
+
+document.getElementById("privateNotesBtn").onclick = () => {
+
+  document.getElementById("vaultContent").style.display = "none";
+  document.getElementById("privateNotesPage").style.display = "block";
+
+};
+
+document.getElementById("savePrivateNoteBtn").onclick = () => {
+
+  const note = document.getElementById("privateNoteInput").value.trim();
+
+  if (!note) {
+    alert("Please write a note.");
+    return;
+  }
+
+  localStorage.setItem(
+    "privateNote_" + currentUser.uid,
+    note
+  );
+
+  alert("✅ Note Saved");
+
+};
+
+// Load saved note
+window.addEventListener("load", () => {
+
+  if (!currentUser) return;
+
+  const note = localStorage.getItem(
+    "privateNote_" + currentUser.uid
+  );
+
+  if (note) {
+    document.getElementById("privateNoteInput").value = note;
+  }
+
+});
