@@ -169,3 +169,31 @@ function updateDashboard(total, completed) {
   if (doneEl) doneEl.textContent = completed;
 
 }
+// =========================
+// Bottom Navigation
+// =========================
+
+const homePage = document.getElementById("homePage");
+const tasksPage = document.getElementById("tasksPage");
+
+document.getElementById("homeTab").onclick = () => {
+  homePage.style.display = "block";
+  tasksPage.style.display = "none";
+};
+
+document.getElementById("tasksTab").onclick = () => {
+  homePage.style.display = "none";
+  tasksPage.style.display = "block";
+};
+
+document.getElementById("songsTab").onclick = () => {
+  alert("🎵 Songs feature coming soon!");
+};
+
+document.getElementById("vaultTab").onclick = () => {
+  alert("🔒 Private Vault coming soon!");
+};
+
+document.getElementById("settingsTab").onclick = () => {
+  alert("⚙️ Settings coming soon!");
+};
