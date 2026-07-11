@@ -364,7 +364,8 @@ document.getElementById("forgotPinBtn").onclick = async () => {
     );
 
     alert("Verification code sent to: " + currentUser.email);
-
+    
+    document.getElementById("verifyPinBox").style.display = "block";
   } catch (error) {
 
     console.error(error);
