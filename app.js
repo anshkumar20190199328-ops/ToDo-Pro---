@@ -314,7 +314,7 @@ document.getElementById("privateNotesBtn").onclick = () => {
 
 };
 
-document.getElementById("savePrivateNoteBtn").onclick = () => {
+document.getElementById("savePrivateNoteBtn").onclick = async () => {
 
   const note = document.getElementById("privateNoteInput").value.trim();
 
@@ -323,12 +323,21 @@ document.getElementById("savePrivateNoteBtn").onclick = () => {
     return;
   }
 
-  localStorage.setItem(
-    "privateNote_" + currentUser.uid,
-    note
-  );
+  try {
 
-  alert("✅ Note Saved");
+    await set(
+      ref(db, "users/" + currentUser.uid + "/vault/note"),
+      note
+    );
+
+    alert("✅ Note Saved");
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Failed to save note.");
+
+  }
 
 };
 
