@@ -87,6 +87,7 @@ onAuthStateChanged(auth, (user) => {
     userName.textContent = "Welcome, " + user.displayName;
 
     loadTasks();
+    loadPrivateNote();
 
   } else {
 
@@ -342,19 +343,28 @@ document.getElementById("savePrivateNoteBtn").onclick = async () => {
 };
 
 // Load saved note
-window.addEventListener("load", () => {
+async function loadPrivateNote() {
 
-  if (!currentUser) return;
+  try {
 
-  const note = localStorage.getItem(
-    "privateNote_" + currentUser.uid
-  );
+    const snapshot = await get(
+      ref(db, "users/" + currentUser.uid + "/vault/note")
+    );
 
-  if (note) {
-    document.getElementById("privateNoteInput").value = note;
+    if (snapshot.exists()) {
+
+      document.getElementById("privateNoteInput").value =
+        snapshot.val();
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
   }
 
-});
+}
 
 document.getElementById("forgotPinBtn").onclick = async () => {
 
