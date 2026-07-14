@@ -456,3 +456,29 @@ document.getElementById("saveNewPinBtn").onclick = async () => {
   }
 
 };
+
+// =========================
+// Dark Mode
+// =========================
+
+document.getElementById("darkModeBtn").onclick = () => {
+
+  document.body.classList.add("dark-mode");
+
+  localStorage.setItem("theme","dark");
+
+};
+
+document.getElementById("lightModeBtn").onclick = () => {
+
+  document.body.classList.remove("dark-mode");
+
+  localStorage.setItem("theme","light");
+
+};
+
+if(localStorage.getItem("theme")==="dark"){
+
+  document.body.classList.add("dark-mode");
+
+}
