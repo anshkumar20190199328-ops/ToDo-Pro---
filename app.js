@@ -120,7 +120,7 @@ function taskRef() {
 
 document.getElementById("addTaskBtn").onclick = () => {
 
-  const text = taskInput.value.trim();
+ const category = document.getElementById("taskCategory").value;
 
   if (!text) {
     alert("Please enter a task.");
@@ -128,11 +128,11 @@ document.getElementById("addTaskBtn").onclick = () => {
   }
 
   set(push(taskRef()), {
-    text: text,
-    done: false,
-    created: Date.now()
-  });
-
+  text: text,
+  category: category,
+  done: false,
+  created: Date.now()
+});
   taskInput.value = "";
 
 };
