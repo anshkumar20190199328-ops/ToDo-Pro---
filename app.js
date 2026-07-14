@@ -72,7 +72,6 @@ document.getElementById("logoutBtn").onclick = async () => {
   await signOut(auth);
 
 };
-};
 
 // =========================
 // Auth State
