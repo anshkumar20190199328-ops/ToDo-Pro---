@@ -64,7 +64,14 @@ document.getElementById("loginBtn").onclick = async () => {
 // =========================
 
 document.getElementById("logoutBtn").onclick = async () => {
+
+  const ok = confirm("Are you sure you want to logout?");
+
+  if (!ok) return;
+
   await signOut(auth);
+
+};
 };
 
 // =========================
@@ -601,3 +608,17 @@ if (appLanguage === "hi") {
   console.log("English Mode");
 
 }
+
+// =========================
+// Settings Logout
+// =========================
+
+document.getElementById("logoutSettingBtn").onclick = async () => {
+
+  const ok = confirm("Are you sure you want to logout?");
+
+  if (!ok) return;
+
+  await signOut(auth);
+
+};
