@@ -546,27 +546,51 @@ document.getElementById("saveChangedPinBtn").onclick = async () => {
 // Language Settings
 // =========================
 
-// English
 document.getElementById("englishBtn").onclick = () => {
 
   localStorage.setItem("language", "en");
+
+  applyLanguage("en");
 
   alert("🇺🇸 English Selected");
 
 };
 
-// Hindi
 document.getElementById("hindiBtn").onclick = () => {
 
   localStorage.setItem("language", "hi");
+
+  applyLanguage("hi");
 
   alert("🇮🇳 हिन्दी चुनी गई");
 
 };
 
+function applyLanguage(lang){
+
+  if(lang === "hi"){
+
+    document.getElementById("homeTitle").textContent = "🏠 होम";
+    document.getElementById("taskTitle").textContent = "मेरे कार्य";
+    document.getElementById("vaultTitle").textContent = "🔒 प्राइवेट वॉल्ट";
+    document.getElementById("settingsTitle").textContent = "⚙️ सेटिंग्स";
+
+  }else{
+
+    document.getElementById("homeTitle").textContent = "🏠 Home";
+    document.getElementById("taskTitle").textContent = "Your Tasks";
+    document.getElementById("vaultTitle").textContent = "🔒 Private Vault";
+    document.getElementById("settingsTitle").textContent = "⚙️ Settings";
+
+  }
+
+}
+
 // Load Saved Language
 
 const appLanguage = localStorage.getItem("language");
+
+applyLanguage(appLanguage || "en");
 
 if (appLanguage === "hi") {
 
