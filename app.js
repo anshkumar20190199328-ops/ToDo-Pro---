@@ -120,6 +120,8 @@ function taskRef() {
 
 document.getElementById("addTaskBtn").onclick = () => {
 
+  const text = taskInput.value.trim();
+
  const category = document.getElementById("taskCategory").value;
 
   if (!text) {
