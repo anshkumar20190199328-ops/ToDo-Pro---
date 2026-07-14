@@ -482,3 +482,62 @@ if(localStorage.getItem("theme")==="dark"){
   document.body.classList.add("dark-mode");
 
 }
+
+// =========================
+// Change PIN
+// =========================
+
+document.getElementById("changePinBtn").onclick = () => {
+
+  const box = document.getElementById("changePinBox");
+
+  if (box.style.display === "none" || box.style.display === "") {
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+
+};
+
+document.getElementById("saveChangedPinBtn").onclick = async () => {
+
+  const currentPin = document.getElementById("currentPinInput").value.trim();
+  const newPin = document.getElementById("newPinChangeInput").value.trim();
+
+  if (currentPin.length !== 4 || newPin.length !== 4) {
+    alert("Please enter valid 4-digit PINs.");
+    return;
+  }
+
+  try {
+
+    const pinRef = ref(db, "users/" + currentUser.uid + "/vault/pin");
+
+    const snapshot = await get(pinRef);
+
+    if (!snapshot.exists()) {
+      alert("No PIN found.");
+      return;
+    }
+
+    if (snapshot.val() !== currentPin) {
+      alert("❌ Current PIN is incorrect.");
+      return;
+    }
+
+    await set(pinRef, newPin);
+
+    alert("✅ PIN changed successfully!");
+
+    document.getElementById("currentPinInput").value = "";
+    document.getElementById("newPinChangeInput").value = "";
+    document.getElementById("changePinBox").style.display = "none";
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Failed to change PIN.");
+
+  }
+
+};
