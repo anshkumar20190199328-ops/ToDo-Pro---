@@ -541,3 +541,39 @@ document.getElementById("saveChangedPinBtn").onclick = async () => {
   }
 
 };
+
+// =========================
+// Language Settings
+// =========================
+
+// English
+document.getElementById("englishBtn").onclick = () => {
+
+  localStorage.setItem("language", "en");
+
+  alert("🇺🇸 English Selected");
+
+};
+
+// Hindi
+document.getElementById("hindiBtn").onclick = () => {
+
+  localStorage.setItem("language", "hi");
+
+  alert("🇮🇳 हिन्दी चुनी गई");
+
+};
+
+// Load Saved Language
+
+const appLanguage = localStorage.getItem("language");
+
+if (appLanguage === "hi") {
+
+  console.log("Hindi Mode");
+
+} else {
+
+  console.log("English Mode");
+
+}
