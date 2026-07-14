@@ -159,9 +159,34 @@ function loadTasks() {
       if (task.done) completed++;
 
       const li = document.createElement("li");
+      let categoryColor = "#0f766e";
+
+switch(task.category){
+
+  case "Study":
+    categoryColor = "#2563eb"; // Blue
+    break;
+
+  case "Work":
+    categoryColor = "#ea580c"; // Orange
+    break;
+
+  case "Personal":
+    categoryColor = "#16a34a"; // Green
+    break;
+
+  case "Shopping":
+    categoryColor = "#9333ea"; // Purple
+    break;
+
+  case "Important":
+    categoryColor = "#dc2626"; // Red
+    break;
+
+}
 
     li.innerHTML = `
-  <small style="color:#0f766e;font-weight:bold;">
+ <small style="color:${categoryColor};font-weight:bold;">
     ${task.category || "General"}
   </small>
 
