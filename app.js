@@ -220,19 +220,22 @@ document.getElementById("homeTab").onclick = () => {
   homePage.style.display = "block";
   tasksPage.style.display = "none";
   vaultPage.style.display = "none";
+  document.getElementById("settingsPage").style.display = "none";
 };
 
 document.getElementById("tasksTab").onclick = () => {
   homePage.style.display = "none";
   tasksPage.style.display = "block";
   vaultPage.style.display = "none";
+  document.getElementById("settingsPage").style.display = "none";
 };
 
 document.getElementById("vaultTab").onclick = () => {
   homePage.style.display = "none";
   tasksPage.style.display = "none";
   vaultPage.style.display = "block";
-
+document.getElementById("settingsPage").style.display = "none";
+  
   pinInput.value = "";
   pinInput.style.display = "block";
   unlockBtn.style.display = "block";
@@ -244,7 +247,15 @@ document.getElementById("songsTab").onclick = () => {
 };
 
 document.getElementById("settingsTab").onclick = () => {
-  alert("⚙️ Settings feature coming soon!");
+
+  homePage.style.display = "none";
+  tasksPage.style.display = "none";
+  vaultPage.style.display = "none";
+
+  document.getElementById("privateNotesPage").style.display = "none";
+
+  document.getElementById("settingsPage").style.display = "block";
+
 };
 
 // =========================
