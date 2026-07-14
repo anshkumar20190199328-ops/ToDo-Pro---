@@ -160,17 +160,22 @@ function loadTasks() {
 
       const li = document.createElement("li");
 
-      li.innerHTML = `
-        <span style="${task.done ? "text-decoration:line-through;color:gray;" : ""}">
-          ${task.text}
-        </span>
+    li.innerHTML = `
+  <small style="color:#0f766e;font-weight:bold;">
+    ${task.category || "General"}
+  </small>
 
-        <div style="margin-top:8px;">
-          <button onclick="toggleTask('${id}', ${task.done})">✔</button>
-          <button onclick="deleteTask('${id}')">🗑</button>
-        </div>
-      `;
+  <br>
 
+  <span style="${task.done ? "text-decoration:line-through;color:gray;" : ""}">
+    ${task.text}
+  </span>
+
+  <div style="margin-top:8px;">
+    <button onclick="toggleTask('${id}', ${task.done})">✔</button>
+    <button onclick="deleteTask('${id}')">🗑</button>
+  </div>
+`;
       taskList.appendChild(li);
 
     });
